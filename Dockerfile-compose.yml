@@ -1,0 +1,46 @@
+version: '3.8'
+
+services:
+  productservice:
+    image: productservice
+    build:
+      context: .
+      dockerfile: productservice
+    ports:
+      - "8079:8080"
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:mysql://mysql:3306/e-commerce1
+      - SPRING_DATASOURCE_USERNAME=root
+      - SPRING_DATASOURCE_PASSWORD=root
+
+  cartservice:
+    image: cartservice
+    build:
+      context: .
+      dockerfile: cartservice
+    ports:
+      - "8078:8081" # Changed port
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:mysql://mysql:3306/e-commerce1
+      - SPRING_DATASOURCE_USERNAME=root
+      - SPRING_DATASOURCE_PASSWORD=root
+
+  checkoutservice:
+    image: chekoutservice
+    build:
+      context: .
+      dockerfile: chekoutservice
+    ports:
+      - "8085:8083"
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:mysql://mysql:3306/e-commerce1
+      - SPRING_DATASOURCE_USERNAME=root
+      - SPRING_DATASOURCE_PASSWORD=root
+
+  mysql:
+    image: mysql:8.0
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: e-commerce1
+    ports:
+      - "3305:3306"
